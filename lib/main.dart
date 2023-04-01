@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:izone_user/view/add_address.dart';
 import 'package:izone_user/view/address_screen.dart';
 import 'package:izone_user/view/bottom%20_navbar.dart';
 import 'package:izone_user/view/cart_screen.dart';
@@ -26,7 +27,7 @@ class _myAppState extends State<myApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BottomNavbar(),
+      home: addAddressScreen(),
     );
   }
 }

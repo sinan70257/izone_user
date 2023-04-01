@@ -32,6 +32,7 @@ class _orderDetailsState extends State<orderDetails> {
             children: [
               Center(
                 child: customField2(
+                    read: true,
                     label: "Deliver to",
                     height: sHeight! / 5,
                     width: sWidth! / 1.03,

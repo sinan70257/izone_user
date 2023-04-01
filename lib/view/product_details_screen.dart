@@ -86,6 +86,7 @@ class _productDetailsState extends State<productDetails> {
                       GB: false),
                   space20(),
                   customField2(
+                    read: true,
                     label: "About product",
                     height: 200,
                     width: sWidth! / 1.1,

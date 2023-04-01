@@ -8,10 +8,12 @@ Column customField2(
     required double width,
     required bool num,
     required bool max,
+    required bool read,
     required String content}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      space10(),
       Text(
         " $label",
         style: GoogleFonts.sora(
@@ -24,17 +26,17 @@ Column customField2(
         ),
         height: height,
         width: width,
-        child: customField(num, max, content),
+        child: customField(num, max, content, read),
       ),
     ],
   );
 }
 
-Widget customField(bool num, bool max, String content) {
+Widget customField(bool num, bool max, String content, bool read) {
   return TextFormField(
     minLines: 1,
     initialValue: content,
-    readOnly: true,
+    readOnly: read,
     maxLines: max ? 10 : 1,
     keyboardType: num ? TextInputType.number : TextInputType.text,
     textAlignVertical: TextAlignVertical.center,
