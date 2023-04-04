@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
+import 'package:izone_user/view/add_address.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
 
 int selectedIndex = 0;
@@ -53,7 +54,13 @@ class _addressScreenState extends State<addressScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       )),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => addAddressScreen(),
+                        ));
+                  },
                   child: Text(
                     "Add",
                   ),

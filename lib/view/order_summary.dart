@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/address_screen.dart';
+import 'package:izone_user/view/payment_screen.dart';
 import 'package:izone_user/view/widgets/cart_list_Tile.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
 import 'package:izone_user/view/widgets/custom_text_field.dart';
@@ -108,7 +109,13 @@ class _orderDetailsState extends State<orderDetails> {
                           borderRadius: BorderRadius.circular(8)),
                       backgroundColor: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => paymentScreen(),
+                          ));
+                    },
                     child: Text(
                       "Continue",
                       style: TextStyle(color: Colors.black),

@@ -19,6 +19,7 @@ Column customField2(
         style: GoogleFonts.sora(
             textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
       ),
+      space10(),
       Container(
         decoration: BoxDecoration(
           color: Kgrey,
