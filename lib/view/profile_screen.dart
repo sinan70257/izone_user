@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
+import 'package:izone_user/view/orders_screen.dart';
+import 'package:izone_user/view/user_details/user_details.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
 
 class profileScreen extends StatefulWidget {
@@ -20,11 +22,11 @@ class _profileScreenState extends State<profileScreen> {
       body: Column(
         children: [
           UserProfile(),
-          profileList("Your orders"),
-          profileList("Account"),
-          profileList("Privacy & policy"),
-          profileList("Terms & Conditions"),
-          profileList("Log out"),
+          profileList("Your orders", ordersScreen(), true),
+          profileList("Account", userDetails(), true),
+          profileList("Privacy & policy", ordersScreen(), false),
+          profileList("Terms & Conditions", ordersScreen(), false),
+          profileList("Log out", ordersScreen(), false),
         ],
       ),
     );
@@ -68,28 +70,47 @@ class _profileScreenState extends State<profileScreen> {
     );
   }
 
-  Container profileList(String label) {
-    return Container(
-      margin: EdgeInsets.only(top: 5),
-      padding: EdgeInsets.only(left: 20),
-      width: sWidth! / 1.05,
-      height: sHeight! / 14,
-      decoration: BoxDecoration(
-        color: Kgrey,
-        borderRadius: BorderRadius.circular(7),
-      ),
-      child: Row(
-        children: [
-          Text(
-            label,
-            style: GoogleFonts.sora(
-                textStyle: TextStyle(
-              fontSize: sWidth! / 18,
-              fontWeight: FontWeight.w600,
-            )),
-          ),
-        ],
+  Widget profileList(String label, Widget goto, bool page) {
+    return InkWell(
+      onTap: () {
+        page
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => goto,
+                ))
+            : null;
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 5),
+        padding: EdgeInsets.only(left: 20),
+        width: sWidth! / 1.05,
+        height: sHeight! / 14,
+        decoration: BoxDecoration(
+          color: Kgrey,
+          borderRadius: BorderRadius.circular(7),
+        ),
+        child: Row(
+          children: [
+            Text(
+              label,
+              style: GoogleFonts.sora(
+                  textStyle: TextStyle(
+                fontSize: sWidth! / 18,
+                fontWeight: FontWeight.w600,
+              )),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void fun() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ordersScreen(),
+        ));
   }
 }
