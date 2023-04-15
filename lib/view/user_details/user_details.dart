@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/user_details/widgets/floating_button.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';

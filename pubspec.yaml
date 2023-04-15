@@ -43,6 +43,8 @@ dependencies:
   smooth_page_indicator: ^1.0.1
   step_indicator: ^0.0.1
   easy_stepper: ^0.5.0
+  firebase_core: ^2.9.0
+  firebase_storage: ^11.1.0
 
 dev_dependencies:
   flutter_test:
