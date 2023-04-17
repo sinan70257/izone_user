@@ -6,7 +6,8 @@ import 'package:izone_user/view/widgets/custom_text_field.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class productDetails extends StatefulWidget {
-  const productDetails({super.key});
+  const productDetails({super.key, this.product});
+  final product;
 
   @override
   State<productDetails> createState() => _productDetailsState();
@@ -16,11 +17,11 @@ class _productDetailsState extends State<productDetails> {
   int activeIndez = 0;
   String? _selectedItem;
   String? _selectedItem2;
-  final List<String> imgList = [
-    "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026582322",
-    "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue_AV1_GEO_EMEA?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026557363",
-    "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue_AV2?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026704198",
-  ];
+  // final List<String> imgList = [
+  //   "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026582322",
+  //   "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue_AV1_GEO_EMEA?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026557363",
+  //   "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue_AV2?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026704198",
+  // ];
   @override
   Widget build(BuildContext context) {
     sHeight = MediaQuery.of(context).size.height;
@@ -42,12 +43,13 @@ class _productDetailsState extends State<productDetails> {
         ),
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            slider(),
+            slider(widget.product),
             space10(),
-            buildIndicator(),
+            buildIndicator(widget.product),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
@@ -55,7 +57,7 @@ class _productDetailsState extends State<productDetails> {
                 children: [
                   space20(),
                   Text(
-                    "iPhone 14 (128 GB)- Blue",
+                    widget.product["name"],
                     style: GoogleFonts.sora(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -64,7 +66,7 @@ class _productDetailsState extends State<productDetails> {
                     ),
                   ),
                   Text(
-                    "₹ 79,990",
+                    "₹ ${widget.product["price"]}",
                     style: GoogleFonts.sora(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -73,27 +75,44 @@ class _productDetailsState extends State<productDetails> {
                     ),
                   ),
                   space20(),
-                  dropDownList(
-                      label: "Color",
-                      height: sHeight! / 14,
-                      width: sWidth! / 1.1,
-                      GB: true),
+                  customField2(
+                    read: true,
+                    label: "Color",
+                    // height: 200,
+                    width: sWidth! / 1.1,
+                    num: false,
+                    max: true,
+                    content: widget.product["color"],
+                  ),
+                  // dropDownList(
+                  //     label: "Color",
+                  //     height: sHeight! / 14,
+                  //     width: sWidth! / 1.1,
+                  //     GB: true),
                   space20(),
-                  dropDownList(
-                      label: "Size",
-                      height: sHeight! / 14,
-                      width: sWidth! / 1.1,
-                      GB: false),
+                  customField2(
+                    read: true,
+                    label: "Variant",
+                    // height: 200,
+                    width: sWidth! / 1.1,
+                    num: false,
+                    max: true,
+                    content: widget.product["variant"],
+                  ),
+                  // dropDownList(
+                  //     label: "Size",
+                  //     height: sHeight! / 14,
+                  //     width: sWidth! / 1.1,
+                  //     GB: false),
                   space20(),
                   customField2(
                     read: true,
                     label: "About product",
-                    height: 200,
+                    // height: 200,
                     width: sWidth! / 1.1,
                     num: false,
                     max: true,
-                    content:
-                        "6.1 Inch Super Retina XDR OLED display A16 Bionic chip 48MP Main  Ultra Wide  Telephoto Pro Camera System 12MP Front Camera Up to 23 hours video playback ProMotion technology Always-On display Dynamic Island Emergency SOS Crash Detection Face ID for secure authentication 5G capable",
+                    content: widget.product["description"],
                   ),
                   SizedBox(
                     height: sHeight! / 10,
@@ -108,13 +127,13 @@ class _productDetailsState extends State<productDetails> {
     );
   }
 
-  CarouselSlider slider() {
+  CarouselSlider slider(product) {
     return CarouselSlider.builder(
       itemBuilder: (context, index, realIndex) {
-        final imgLists = imgList[index];
+        final imgLists = product["images"][index];
         return buildimage(imgLists, index);
       },
-      itemCount: imgList.length,
+      itemCount: product["images"].length,
       options: CarouselOptions(
         onPageChanged: (index, reason) => setState(() => activeIndez = index),
         enlargeCenterPage: true,
@@ -135,10 +154,10 @@ class _productDetailsState extends State<productDetails> {
         margin: EdgeInsets.symmetric(horizontal: 8),
       );
 
-  Widget buildIndicator() => Center(
+  Widget buildIndicator(product) => Center(
         child: AnimatedSmoothIndicator(
           activeIndex: activeIndez,
-          count: imgList.length,
+          count: product["images"].length,
           effect: ExpandingDotsEffect(
             dotColor: Kgrey,
             activeDotColor: Kgrey2,

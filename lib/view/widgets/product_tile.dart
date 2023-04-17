@@ -4,7 +4,7 @@ import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/order_summary.dart';
 import 'package:izone_user/view/product_details_screen.dart';
 
-Widget productTile(String pName, String pPrice, context) {
+Widget productTile(String pName, String pPrice, context, product) {
   bool fav = false;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -12,7 +12,7 @@ Widget productTile(String pName, String pPrice, context) {
       InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => productDetails(),
+            builder: (context) => productDetails(product: product),
           ));
         },
         child: Column(
@@ -24,8 +24,7 @@ Widget productTile(String pName, String pPrice, context) {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(
-                        "https://assets.shpresa.al/shop/2022/09/daac540d-cel1351-p.jpg"),
+                    image: NetworkImage(product["images"][0]),
                     fit: BoxFit.cover),
                 color: Kgrey,
                 borderRadius: BorderRadius.circular(15),
@@ -38,6 +37,7 @@ Widget productTile(String pName, String pPrice, context) {
                 children: [
                   Text(
                     "  $pName",
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.poppins(
                       textStyle:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w500),

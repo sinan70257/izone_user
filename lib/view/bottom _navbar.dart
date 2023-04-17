@@ -1,12 +1,11 @@
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/cart_screen.dart';
-import 'package:izone_user/view/category_screen.dart';
+import 'package:izone_user/view/cart_screen/cart_screen.dart';
+import 'package:izone_user/view/category_screen/category_screen.dart';
 import 'package:izone_user/view/profile_screen.dart';
 import 'package:izone_user/view/wishlist_screen.dart';
-import '../view/home_screen.dart';
+import 'package:izone_user/view/home_screen/home_screen.dart';
 
 // ignore: must_be_immutable
 class BottomNavbar extends StatefulWidget {
@@ -47,24 +46,13 @@ class _BottomNavbarState extends State<BottomNavbar> {
               widget.currentIndex = newCurrentIndex;
             });
           },
-          // currentIndex: widget.currentIndex,
           items: <FloatingNavbarItem>[
             FloatingNavbarItem(
               icon: Icons.home_filled,
-
-              // title: const Text(
-              //   "Home",
-              //   style: TextStyle(color: Colors.white),
-              // ),
             ),
             FloatingNavbarItem(
               icon: Icons.shopping_cart_outlined,
             ),
-            // title: const Text(
-            //   'Playlists',
-            //   style: TextStyle(color: Colors.white),
-            // ),
-
             FloatingNavbarItem(
               icon: Icons.category_outlined,
             ),

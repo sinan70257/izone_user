@@ -44,6 +44,7 @@ dependencies:
   step_indicator: ^0.0.1
   easy_stepper: ^0.5.0
   firebase_core: ^2.9.0
+  cloud_firestore: ^4.5.0
   firebase_storage: ^11.1.0
 
 dev_dependencies:

@@ -4,8 +4,8 @@ import 'package:izone_user/constants/constants.dart';
 
 Column customField2(
     {required String label,
-    required double height,
-    required double width,
+    double? height,
+    double? width,
     required bool num,
     required bool max,
     required bool read,
@@ -38,7 +38,7 @@ Widget customField(bool num, bool max, String content, bool read) {
     minLines: 1,
     initialValue: content,
     readOnly: read,
-    maxLines: max ? 10 : 1,
+    maxLines: max ? 50 : 1,
     keyboardType: num ? TextInputType.number : TextInputType.text,
     textAlignVertical: TextAlignVertical.center,
     decoration: InputDecoration(

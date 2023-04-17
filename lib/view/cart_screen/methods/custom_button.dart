@@ -2,46 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/order_summary.dart';
-import 'package:izone_user/view/widgets/cart_list_Tile.dart';
-import 'package:izone_user/view/widgets/custom_app_bar.dart';
 
-class cartScreen extends StatefulWidget {
-  const cartScreen({super.key});
+class customBottomBar extends StatefulWidget {
+  const customBottomBar({super.key});
 
   @override
-  State<cartScreen> createState() => _cartScreenState();
+  State<customBottomBar> createState() => _customBottomBarState();
 }
 
-class _cartScreenState extends State<cartScreen> {
+class _customBottomBarState extends State<customBottomBar> {
   @override
   Widget build(BuildContext context) {
-    sHeight = MediaQuery.of(context).size.height;
-    sWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-        bottomSheet: customBottomBar(),
-        appBar: customAppbar(context, false, "My cart", true),
-        body: SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: 10,
-                    itemBuilder: (context, index) => cartListTile(),
-                  ),
-                  SizedBox(
-                    height: sHeight! / 14,
-                  )
-                ],
-              ),
-            )));
-  }
-
-  Container customBottomBar() {
     return Container(
       decoration: BoxDecoration(
           color: Kblue,

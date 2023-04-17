@@ -3,8 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/add_address.dart';
-import 'package:izone_user/view/address_screen.dart';
+import 'package:izone_user/view/address/add_address/add_address.dart';
+import 'package:izone_user/view/address/address_screen/address_screen.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
 
 class paymentScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/address_screen.dart';
+import 'package:izone_user/view/address/address_screen/address_screen.dart';
 import 'package:izone_user/view/payment_screen.dart';
 import 'package:izone_user/view/widgets/cart_list_Tile.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';

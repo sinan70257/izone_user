@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/product_details_screen.dart';
+import 'package:izone_user/view/category_screen/methods/product_grid.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
-import 'package:izone_user/view/widgets/product_tile.dart';
 
 class categoryScreen extends StatefulWidget {
   const categoryScreen({super.key});
@@ -46,32 +44,6 @@ class _categoryScreenState extends State<categoryScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  GridView ProductGrid() {
-    return GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 300,
-            childAspectRatio: (sHeight! / 1.05 / sWidth! / 3.02),
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15),
-        itemCount: 20,
-        itemBuilder: (BuildContext ctx, index) {
-          return productTile("iPhone 14 Pro", "89,990", context);
-        });
-  }
-
-  Text productsTitle(String label) {
-    return Text(
-      label,
-      style: GoogleFonts.sora(
-          textStyle: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      )),
     );
   }
 
