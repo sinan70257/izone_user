@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/orders_screen.dart';
+import 'package:izone_user/view/splash_screen/spalsh_screen.dart';
 import 'package:izone_user/view/user_details/user_details.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
 
@@ -26,7 +26,33 @@ class _profileScreenState extends State<profileScreen> {
           profileList("Account", userDetails(), true),
           profileList("Privacy & policy", ordersScreen(), false),
           profileList("Terms & Conditions", ordersScreen(), false),
-          profileList("Log out", ordersScreen(), false),
+          InkWell(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.only(left: 20),
+              width: sWidth! / 1.05,
+              height: sHeight! / 14,
+              decoration: BoxDecoration(
+                color: Kgrey,
+                borderRadius: BorderRadius.circular(7),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    "Log Out",
+                    style: GoogleFonts.sora(
+                        textStyle: TextStyle(
+                      fontSize: sWidth! / 18,
+                      fontWeight: FontWeight.w600,
+                    )),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

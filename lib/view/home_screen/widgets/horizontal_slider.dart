@@ -34,7 +34,7 @@ class _horizontalSliderState extends State<horizontalSlider> {
                 return snapshot.data!.isEmpty
                     ? Text('list empty')
                     : ListView.builder(
-                        physics: ClampingScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         itemCount: 10,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
