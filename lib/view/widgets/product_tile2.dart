@@ -4,14 +4,15 @@ import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/order_summary.dart';
 import 'package:izone_user/view/product_details_screen.dart';
 
-Widget productTile(String pName, String pPrice, context, product) {
+Widget productTile2(String pName, String pPrice, context, product) {
   bool fav = false;
   return Container(
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: Color.fromARGB(255, 238, 238, 238),
       borderRadius: BorderRadius.circular(10),
     ),
     width: 200,
+    height: 500,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,9 +26,9 @@ Widget productTile(String pName, String pPrice, context, product) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 5),
-                width: sWidth! / 2.2,
-                height: sWidth! / 2.2,
+                margin: EdgeInsets.only(top: 8, bottom: 8),
+                width: sWidth! / 2.1,
+                height: sWidth! / 2.1,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -40,21 +41,28 @@ Widget productTile(String pName, String pPrice, context, product) {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "$pName",
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
+                    SizedBox(
+                      width: 200,
+                      height: 45,
+                      child: Text(
+                        "$pName",
+                        textAlign: TextAlign.center,
+                        // overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
+                    space10(),
                     Text(
-                      "₹ $pPrice",
-                      style: GoogleFonts.inter(
+                      "MRP ₹ $pPrice.00\n(Incl. of all taxes)",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
                         textStyle: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
+                            fontSize: 15, fontWeight: FontWeight.normal),
                       ),
                     ),
                   ],
@@ -69,9 +77,9 @@ Widget productTile(String pName, String pPrice, context, product) {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 0, left: 10),
+                margin: EdgeInsets.only(top: 0, left: 8),
                 height: sHeight! / 30,
-                width: sWidth! / 4.5,
+                width: sWidth! / 3,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(

@@ -17,7 +17,7 @@ class _productGridState extends State<productGrid> {
         builder: (context, snapshot) {
           final data = snapshot.data;
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(child: const CircularProgressIndicator());
           }
           if (snapshot.connectionState == ConnectionState.done ||
               snapshot.connectionState == ConnectionState.active) {
@@ -29,9 +29,9 @@ class _productGridState extends State<productGrid> {
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.68,
+                        childAspectRatio: 0.65,
                         crossAxisSpacing: 10,
-                        mainAxisSpacing: 1,
+                        mainAxisSpacing: 10,
                       ),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext ctx, index) {

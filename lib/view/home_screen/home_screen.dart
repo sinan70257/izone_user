@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:izone_user/constants/constants.dart';
+import 'package:izone_user/controller/get_data.dart';
 import 'package:izone_user/view/home_screen/widgets/home_slider.dart';
 import 'package:izone_user/view/home_screen/widgets/horizontal_slider.dart';
 import 'package:izone_user/view/home_screen/widgets/product_grid.dart';
@@ -22,23 +23,42 @@ class _honeScreenState extends State<homeScreen> {
     sWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: customAppbar(context, true, "", true),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            space10(),
-            slider(),
-            space10(),
-            productTitle(" New Arrivals"),
-            horizontalSlider(),
-            space10(),
-            productTitle(" All products"),
-            productGrid(),
-          ],
-        ),
-      ),
+      body: StreamBuilder(
+          stream: getImages(),
+          builder: (context, snapshot) {
+            final img = snapshot.data;
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: const CircularProgressIndicator());
+            }
+            if (snapshot.connectionState == ConnectionState.done ||
+                snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return snapshot.data!.isEmpty
+                    ? Text('list empty')
+                    : SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              space10(),
+                              slider(images: img),
+                              space10(),
+                              productTitle("New Arrivals"),
+                              horizontalSlider(),
+                              space10(),
+                              productTitle("All products"),
+                              productGrid(),
+                            ],
+                          ),
+                        ),
+                      );
+              }
+            }
+            return Text("error");
+          }),
     );
   }
 

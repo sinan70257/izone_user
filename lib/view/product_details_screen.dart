@@ -17,11 +17,6 @@ class _productDetailsState extends State<productDetails> {
   int activeIndez = 0;
   String? _selectedItem;
   String? _selectedItem2;
-  // final List<String> imgList = [
-  //   "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026582322",
-  //   "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue_AV1_GEO_EMEA?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026557363",
-  //   "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-14-finish-select-202209-6-1inch-blue_AV2?wid=2560&hei=1440&fmt=p-jpg&qlt=80&.v=1661026704198",
-  // ];
   @override
   Widget build(BuildContext context) {
     sHeight = MediaQuery.of(context).size.height;
@@ -58,7 +53,7 @@ class _productDetailsState extends State<productDetails> {
                   space20(),
                   Text(
                     widget.product["name"],
-                    style: GoogleFonts.sora(
+                    style: GoogleFonts.roboto(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -68,6 +63,7 @@ class _productDetailsState extends State<productDetails> {
                   Text(
                     "₹ ${widget.product["price"]}",
                     style: GoogleFonts.sora(
+                      height: 1.5,
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 25,

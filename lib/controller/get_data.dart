@@ -13,3 +13,15 @@ Stream<List<DocumentSnapshot>> getProducts() async* {
     // handle error
   }
 }
+
+Stream<List<DocumentSnapshot>> getImages() async* {
+  try {
+    final QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('feature').get();
+    final List<DocumentSnapshot> docs = querySnapshot.docs;
+    // log(docs.toString());
+    yield docs;
+  } catch (e) {
+    // handle error
+  }
+}
