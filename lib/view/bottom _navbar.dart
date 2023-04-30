@@ -9,13 +9,14 @@ import 'package:izone_user/view/home_screen/home_screen.dart';
 
 // ignore: must_be_immutable
 class BottomNavbar extends StatefulWidget {
-  BottomNavbar({super.key});
+  BottomNavbar({super.key, required this.cart});
+  final bool cart;
   int currentIndex = 0;
   List pages = [
     homeScreen(),
     cartScreen(),
     categoryScreen(),
-    wishList(),
+    wishListScreen(),
     profileScreen()
   ];
 
@@ -24,6 +25,15 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (widget.cart == true) {
+      widget.currentIndex = 1;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

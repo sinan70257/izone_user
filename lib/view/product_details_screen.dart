@@ -1,8 +1,11 @@
+import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
+import 'package:izone_user/view/bottom%20_navbar.dart';
 import 'package:izone_user/view/widgets/custom_text_field.dart';
+import 'package:izone_user/view/widgets/product_tile.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class productDetails extends StatefulWidget {
@@ -60,15 +63,21 @@ class _productDetailsState extends State<productDetails> {
                       ),
                     ),
                   ),
-                  Text(
-                    "₹ ${widget.product["price"]}",
-                    style: GoogleFonts.sora(
-                      height: 1.5,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 25,
+                  Row(
+                    children: [
+                      Text(
+                        "₹ ${widget.product["price"]}",
+                        style: GoogleFonts.sora(
+                          height: 1.5,
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 25,
+                          ),
+                        ),
                       ),
-                    ),
+                      Spacer(),
+                      favbutton(product: widget.product)
+                    ],
                   ),
                   space20(),
                   customField2(
@@ -243,8 +252,38 @@ class _productDetailsState extends State<productDetails> {
               Container(
                 height: sHeight! / 20,
                 width: sWidth! / 2.5,
+                margin: EdgeInsets.only(right: sWidth! / 22),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (clist.contains(widget.product["id"])) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Kblue,
+                          content: Text("Product is already in the cart"),
+                        ),
+                      );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomNavbar(
+                            cart: true,
+                          ),
+                        ),
+                      );
+                    } else {
+                      clist.add(widget.product["id"]);
+                      wishList my = wishList(cart: clist, wish: wlist);
+                      my.addToFirestoreWish();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomNavbar(
+                            cart: true,
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   child: Text(
                     "Add to cart",
                     style: GoogleFonts.sora(
@@ -255,7 +294,6 @@ class _productDetailsState extends State<productDetails> {
                     ),
                   ),
                 ),
-                margin: EdgeInsets.only(right: sWidth! / 22),
               ),
               Container(
                 height: sHeight! / 20,

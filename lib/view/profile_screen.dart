@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
+import 'package:izone_user/constants/provider.dart';
 import 'package:izone_user/view/orders_screen.dart';
 import 'package:izone_user/view/splash_screen/spalsh_screen.dart';
 import 'package:izone_user/view/user_details/user_details.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class profileScreen extends StatefulWidget {
   const profileScreen({super.key});
@@ -27,8 +29,16 @@ class _profileScreenState extends State<profileScreen> {
           profileList("Privacy & policy", ordersScreen(), false),
           profileList("Terms & Conditions", ordersScreen(), false),
           InkWell(
-            onTap: () {
-              FirebaseAuth.instance.signOut();
+            onTap: () async {
+              if (flag == 1) {
+                final provider =
+                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.googleLogout();
+                // Navigator.pop(context);
+              } else {
+                FirebaseAuth.instance.signOut();
+                // Navigator.pop(context);
+              }
             },
             child: Container(
               margin: EdgeInsets.only(top: 5),
@@ -68,11 +78,17 @@ class _profileScreenState extends State<profileScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Hello, User !",
-                style: GoogleFonts.sora(
-                  textStyle: TextStyle(
-                      fontSize: sWidth! / 11, fontWeight: FontWeight.bold),
-                )),
+            Container(
+              alignment: Alignment.center,
+              height: 150,
+              width: 200,
+              child: Text(
+                  "Hello, ${FirebaseAuth.instance.currentUser!.displayName ?? "User"} !",
+                  style: GoogleFonts.sora(
+                    textStyle: TextStyle(
+                        fontSize: sWidth! / 11, fontWeight: FontWeight.bold),
+                  )),
+            ),
             Spacer(),
             Container(
               height: sHeight! / 7,
@@ -84,8 +100,9 @@ class _profileScreenState extends State<profileScreen> {
                   height: sHeight! / 7.5,
                   width: sHeight! / 7.5,
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://cdn.profoto.com/cdn/053149e/contentassets/d39349344d004f9b8963df1551f24bf4/profoto-albert-watson-steve-jobs-pinned-image-original.jpg?width=1280&quality=75&format=jpg"),
+                    backgroundImage: NetworkImage(FirebaseAuth
+                            .instance.currentUser!.photoURL ??
+                        "https://i0.wp.com/www.cocoanetics.com/files/t_hero.png?fit=706%2C644&ssl=1"),
                   ),
                 ),
               ),

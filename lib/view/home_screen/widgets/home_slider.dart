@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:izone_user/constants/constants.dart';
@@ -41,12 +42,25 @@ class _sliderState extends State<slider> {
   }
 
   Widget buildimage(String url, int index) => Container(
+        margin: EdgeInsets.symmetric(horizontal: 8),
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover),
         ),
-        margin: EdgeInsets.symmetric(horizontal: 8),
+        child: CachedNetworkImage(
+          placeholder: (context, url) =>
+              Image.asset("lib/assets/izone place holder.jpg"),
+          imageUrl: url,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
       );
   Widget buildIndicator() => Center(
         child: AnimatedSmoothIndicator(
@@ -54,9 +68,9 @@ class _sliderState extends State<slider> {
           count: widget.images[0]["images"].length,
           effect: ExpandingDotsEffect(
             dotColor: Kgrey,
-            activeDotColor: Kgrey,
+            activeDotColor: Kgrey2,
             dotWidth: 10,
-            dotHeight: 6,
+            dotHeight: 7,
           ),
         ),
       );

@@ -12,15 +12,15 @@ class GoogleSignUpBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         height: 60,
         width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: white,
+            backgroundColor: black,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               side: BorderSide(color: Kblue, width: 1),
             ),
           ),
@@ -30,15 +30,13 @@ class GoogleSignUpBtn extends StatelessWidget {
             provider.googleLogin();
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network(
-                  'https://img.icons8.com/fluency/512/google-logo.png',
-                  scale: 13.5),
+              Image.asset('lib/assets/google png.png', scale: 29),
               Text(
-                'Sign In with Google',
+                '  Sign In with Google',
                 style: GoogleFonts.roboto(
-                  textStyle: TextStyle(fontSize: 26, color: Kblue),
+                  textStyle: TextStyle(fontSize: 22, color: Kblue),
                 ),
               ),
             ],

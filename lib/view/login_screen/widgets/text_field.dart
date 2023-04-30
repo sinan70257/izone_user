@@ -35,12 +35,12 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(left: 12),
+            padding: const EdgeInsets.only(left: 5, top: 1),
             height: widget.ht,
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(widget.border),
-              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromARGB(255, 26, 26, 26),
             ),
             child: Padding(
               padding: const EdgeInsets.all(6.0),
@@ -49,28 +49,20 @@ class _MyTextFieldState extends State<MyTextField> {
                 controller: widget.myControler,
                 cursorColor: Kblue,
                 style: GoogleFonts.roboto(
-                  textStyle: TextStyle(color: black),
+                  textStyle: TextStyle(color: white),
                 ),
                 decoration: InputDecoration(
-                  prefixIcon: Icon(widget.icon, size: 28, color: Kblue),
+                  prefixIcon: Icon(widget.icon, size: 22, color: Kblue),
                   border: const OutlineInputBorder(borderSide: BorderSide.none),
                   contentPadding: const EdgeInsets.all(5),
                   hintText: widget.title,
                   hintStyle: GoogleFonts.roboto(
-                    textStyle: const TextStyle(fontSize: 22),
+                    textStyle: TextStyle(
+                      fontSize: 16,
+                      color: Kgrey,
+                    ),
                   ),
                 ),
-                // autovalidateMode: AutovalidateMode.onUserInteraction,
-                // validator: (email) {
-
-                //   email != null && !EmailValidator.validate(email)
-                //       ? 'Enter a valid email'
-                //       : null;
-
-                //   // email != null && email.length < 6
-                //   //     ? 'enter a minimum of 6 characters'
-                //   //     : null;
-                // },
               ),
             ),
           ),

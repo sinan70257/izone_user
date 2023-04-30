@@ -23,16 +23,11 @@ class SignUpBtn extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Kblue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               onPressed: () {
-                // if (formKey1.currentState!.validate()) {
                 signUp(context);
-                // }
-                // nameController.clear();
-                // userNameController.clear();
-                // passwordController.clear();
               },
               child: Text(
                 'Sign In',

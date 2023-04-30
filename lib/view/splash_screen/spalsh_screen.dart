@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/bottom%20_navbar.dart';
+import 'package:izone_user/view/cart_screen/cart_screen.dart';
 import 'package:izone_user/view/login_screen/login_screen.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -29,15 +30,14 @@ class _SplashScreenState extends State<SplashScreen> {
     mHeight = MediaQuery.of(context).size.height;
     mWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Center(
-        child: Text(
-          'aptronix.',
-          style: GoogleFonts.roboto(
-            textStyle: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
-    );
+        body: Container(
+      height: mHeight,
+      width: mWidth,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("lib/assets/izone splash.jpg"),
+              fit: BoxFit.cover)),
+    ));
   }
 
   void checkLogin() async {
@@ -79,7 +79,10 @@ class CheckUserLogin extends StatelessWidget {
             );
           }
           if (snapshot.hasData) {
-            return BottomNavbar();
+            // return BottomNavbar(
+            //   cart: false,
+            // );
+            return cartScreen();
           } else {
             return LoginScreen();
           }

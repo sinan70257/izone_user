@@ -12,10 +12,12 @@ class SignInText extends StatelessWidget {
       padding: const EdgeInsets.only(top: 165),
       child: Column(
         children: [
-          Text(
-            'aptronix.',
-            style: GoogleFonts.roboto(
-              textStyle: TextStyle(fontSize: 33, color: black),
+          Container(
+            height: 70,
+            width: 250,
+            child: Image.asset(
+              "lib/assets/iZone.png",
+              fit: BoxFit.cover,
             ),
           ),
           kHeight,
@@ -23,8 +25,8 @@ class SignInText extends StatelessWidget {
             title,
             style: GoogleFonts.roboto(
               textStyle: TextStyle(
-                fontSize: 60,
-                color: black,
+                fontSize: 40,
+                color: Kgrey3,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/login_screen/widgets/text_field.dart';
+import 'package:izone_user/view/widgets/product_tile.dart';
 
 class SignUpTxtBtn extends StatelessWidget {
   const SignUpTxtBtn({super.key, this.signUp = true, required this.navigateTo});
@@ -16,23 +17,23 @@ class SignUpTxtBtn extends StatelessWidget {
         signUp
             ? Text(
                 "New user? ",
-                style: GoogleFonts.roboto(fontSize: 20),
+                style: GoogleFonts.roboto(fontSize: 20, color: Kgrey2),
               )
             : Text(
                 "Already have an account ! ",
-                style: GoogleFonts.roboto(fontSize: 20),
+                style: GoogleFonts.roboto(fontSize: 20, color: Kgrey2),
               ),
         InkWell(
           child: signUp
               ? Text(
                   "Sign Up ",
                   style: GoogleFonts.roboto(
-                      fontSize: 22, color: Kblue, fontWeight: FontWeight.bold),
+                      fontSize: 20, color: Kblue, fontWeight: FontWeight.bold),
                 )
               : Text(
                   "Login",
                   style: GoogleFonts.roboto(
-                      fontSize: 22, color: Kblue, fontWeight: FontWeight.bold),
+                      fontSize: 20, color: Kblue, fontWeight: FontWeight.bold),
                 ),
           onTap: () {
             nameController.clear();

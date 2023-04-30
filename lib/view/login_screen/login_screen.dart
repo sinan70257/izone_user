@@ -14,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: black,
       body: ListView(physics: const BouncingScrollPhysics(), children: [
         const SignInText(title: 'Sign In'),
         kHeight20,
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           ht: 60,
           border: 20,
           title: 'Email',
-          icon: Icons.mail,
+          icon: Icons.mail_rounded,
           myControler: userNameController,
           passChar: false,
         ),
@@ -30,7 +31,7 @@ class LoginScreen extends StatelessWidget {
           ht: 60,
           border: 20,
           title: 'Password',
-          icon: Icons.lock,
+          icon: Icons.lock_rounded,
           myControler: passwordController,
           passChar: true,
         ),

@@ -81,7 +81,9 @@ class _loginScreenState extends State<loginScreen> {
                               // checkLogin(context);.
                               checkLogin();
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => BottomNavbar(),
+                                builder: (context) => BottomNavbar(
+                                  cart: false,
+                                ),
                               ));
                             }
                           },

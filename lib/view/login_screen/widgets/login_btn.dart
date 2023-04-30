@@ -22,7 +22,7 @@ class LoginBtn extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Kblue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               onPressed: () {
@@ -34,7 +34,7 @@ class LoginBtn extends StatelessWidget {
               child: Text(
                 'Sign In',
                 style: GoogleFonts.roboto(
-                    textStyle: const TextStyle(fontSize: 28)),
+                    textStyle: const TextStyle(fontSize: 22)),
               ),
             ),
           ),
@@ -92,11 +92,11 @@ class LoginBtn extends StatelessWidget {
           content: Text(
             errorMessage,
             style: GoogleFonts.roboto(
-              textStyle: const TextStyle(fontSize: 20),
+              textStyle: const TextStyle(fontSize: 15),
             ),
           ),
           duration: const Duration(seconds: 2),
-          backgroundColor: Colors.red,
+          backgroundColor: Color.fromARGB(255, 232, 15, 0),
         ),
       );
     }

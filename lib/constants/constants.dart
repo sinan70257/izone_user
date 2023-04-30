@@ -38,3 +38,5 @@ class ItemModel {
 }
 
 bool selected = false;
+List wlist = [];
+List clist = [];

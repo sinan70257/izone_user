@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/order_summary.dart';
 import 'package:izone_user/view/product_details_screen.dart';
+import 'package:izone_user/view/widgets/product_tile.dart';
 
 Widget productTile2(String pName, String pPrice, context, product) {
   bool fav = false;
@@ -26,18 +28,31 @@ Widget productTile2(String pName, String pPrice, context, product) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 8, bottom: 8),
-                width: sWidth! / 2.1,
-                height: sWidth! / 2.1,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(product["images"][0]),
-                      fit: BoxFit.cover),
-                  color: Kgrey,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
+                  margin: EdgeInsets.only(top: 8, bottom: 8),
+                  width: sWidth! / 2.1,
+                  height: sWidth! / 2.1,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    // image: DecorationImage(
+                    //     image: NetworkImage(product["images"][0]),
+                    //     fit: BoxFit.cover),
+                    color: Kgrey,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: CachedNetworkImage(
+                    placeholder: (context, url) =>
+                        Image.asset("lib/assets/izone place holder.jpg"),
+                    imageUrl: product["images"][0],
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  )),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
@@ -100,7 +115,9 @@ Widget productTile2(String pName, String pPrice, context, product) {
                 ),
               ),
               Spacer(),
-              favbutton()
+              favbutton(
+                product: product,
+              )
             ],
           ),
         )
@@ -109,29 +126,29 @@ Widget productTile2(String pName, String pPrice, context, product) {
   );
 }
 
-class favbutton extends StatefulWidget {
-  const favbutton({
-    super.key,
-  });
+// class favbutton extends StatefulWidget {
+//   const favbutton({
+//     super.key,
+//   });
 
-  @override
-  State<favbutton> createState() => _favbuttonState();
-}
+//   @override
+//   State<favbutton> createState() => _favbuttonState();
+// }
 
-class _favbuttonState extends State<favbutton> {
-  bool fav = false;
+// class _favbuttonState extends State<favbutton> {
+//   bool fav = false;
 
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          setState(() {
-            fav = !fav;
-          });
-        },
-        icon: Icon(
-          fav ? Icons.favorite : Icons.favorite_border,
-          color: fav ? Colors.red : Kgrey3,
-        ));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return IconButton(
+//         onPressed: () {
+//           setState(() {
+//             fav = !fav;
+//           });
+//         },
+//         icon: Icon(
+//           fav ? Icons.favorite : Icons.favorite_border,
+//           color: fav ? Colors.red : Kgrey3,
+//         ));
+//   }
+// }

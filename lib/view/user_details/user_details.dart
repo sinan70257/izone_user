@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/user_details/widgets/floating_button.dart';
@@ -24,7 +25,9 @@ class _userDetailsState extends State<userDetails> {
             space20(),
             CircleAvatar(
               radius: 100,
-              backgroundColor: Kblue,
+              backgroundImage: NetworkImage(FirebaseAuth
+                      .instance.currentUser!.photoURL ??
+                  "https://i0.wp.com/www.cocoanetics.com/files/t_hero.png?fit=706%2C644&ssl=1"),
             ),
             customField2(
                 label: "User name",
@@ -33,7 +36,7 @@ class _userDetailsState extends State<userDetails> {
                 num: false,
                 max: false,
                 read: false,
-                content: ""),
+                content: FirebaseAuth.instance.currentUser!.displayName!),
             customField2(
                 label: "Password",
                 height: 50,
@@ -41,7 +44,8 @@ class _userDetailsState extends State<userDetails> {
                 num: false,
                 max: false,
                 read: false,
-                content: ""),
+                content: FirebaseAuth.instance.currentUser!.phoneNumber ??
+                    "5454212215"),
           ],
         ),
       ),

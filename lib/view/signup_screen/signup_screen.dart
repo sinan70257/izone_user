@@ -12,6 +12,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: black,
       body: ListView(physics: const BouncingScrollPhysics(), children: [
         const SignInText(title: 'Sign Up'),
         kHeight20,
