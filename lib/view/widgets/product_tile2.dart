@@ -29,19 +29,21 @@ Widget productTile2(String pName, String pPrice, context, product) {
             children: [
               Container(
                   margin: EdgeInsets.only(top: 8, bottom: 8),
-                  width: sWidth! / 2.1,
-                  height: sWidth! / 2.1,
+                  width: 180,
+                  height: 200,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     // image: DecorationImage(
                     //     image: NetworkImage(product["images"][0]),
                     //     fit: BoxFit.cover),
-                    color: Kgrey,
+                    color: white,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        Image.asset("lib/assets/izone place holder.jpg"),
+                    placeholder: (context, url) => Image.asset(
+                      "lib/assets/izone place holder.jpg",
+                      fit: BoxFit.cover,
+                    ),
                     imageUrl: product["images"][0],
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
@@ -60,14 +62,14 @@ Widget productTile2(String pName, String pPrice, context, product) {
                   children: [
                     SizedBox(
                       width: 200,
-                      height: 45,
+                      height: 40,
                       child: Text(
                         "$pName",
                         textAlign: TextAlign.center,
                         // overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.roboto(
                           textStyle: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
+                              fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -77,12 +79,13 @@ Widget productTile2(String pName, String pPrice, context, product) {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
                         textStyle: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.normal),
+                            fontSize: 14, fontWeight: FontWeight.normal),
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              // space20(),
             ],
           ),
         ),
@@ -92,9 +95,9 @@ Widget productTile2(String pName, String pPrice, context, product) {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 0, left: 8),
-                height: sHeight! / 30,
-                width: sWidth! / 3,
+                margin: EdgeInsets.only(left: 10),
+                height: 28,
+                width: 140,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(

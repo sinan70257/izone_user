@@ -1,9 +1,10 @@
 import 'package:easy_stepper/easy_stepper.dart';
-import 'package:izone_user/controller/get_data.dart';
+import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/widgets/product_tile.dart';
 
 class productGrid extends StatefulWidget {
-  const productGrid({super.key});
+  const productGrid({super.key, this.search = false});
+  final search;
 
   @override
   State<productGrid> createState() => _productGridState();
@@ -12,36 +13,34 @@ class productGrid extends StatefulWidget {
 class _productGridState extends State<productGrid> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: getProducts(),
-        builder: (context, snapshot) {
-          final data = snapshot.data;
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: const CircularProgressIndicator());
-          }
-          if (snapshot.connectionState == ConnectionState.done ||
-              snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData) {
-              return snapshot.data!.isEmpty
-                  ? Text('list empty')
-                  : GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.65,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        final product = data![index];
-                        return productTile(product["name"], product["price"],
-                            context, product);
-                      });
-            }
-          }
-          return Text('Error');
-        });
+    return (widget.search ? searchlist.length : allProducts.length) > 0
+        ? GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.65,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemCount: widget.search ? searchlist.length : allProducts.length,
+            itemBuilder: (BuildContext ctx, index) {
+              final product =
+                  widget.search ? searchlist[index] : allProducts[index];
+              return productTile(
+                  product["name"], product["price"], context, product);
+            })
+        : SizedBox(
+            height: sHeight! / 1.5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Image.asset("lib/assets/nothing found.jpg"),
+                ),
+              ],
+            ),
+          );
   }
 }

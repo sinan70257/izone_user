@@ -6,13 +6,6 @@ import 'package:izone_user/view/widgets/custom_app_bar.dart';
 import 'package:izone_user/view/address/address_screen/widgets/custom_button.dart';
 
 int selectedIndex = 0;
-String? selectedAddress;
-List address = [
-  "Address one",
-  "Address two",
-  "Address thrkjfkl;ejfkldskjfkdlsjflkdsjklfjdkljfldjfkdjfkldjlfkjdskljflkdjklfjdlkjfkdjlkafjdklsjfdsjflkee",
-  "Address four",
-];
 
 class addressScreen extends StatefulWidget {
   const addressScreen({super.key});
@@ -32,10 +25,8 @@ class _addressScreenState extends State<addressScreen> {
         children: [
           space10(),
           selectAddress(),
-          addressList(),
         ],
       ),
-      bottomNavigationBar: floatingButton(),
     );
   }
 }

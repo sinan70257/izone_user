@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/login_screen.dart';
-import 'package:izone_user/view/order_details/orded_details.dart';
+import 'package:izone_user/view/order_details/order_summary.dart';
 
 class ordersScreen extends StatefulWidget {
   const ordersScreen({super.key});

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/constants/provider.dart';
+import 'package:izone_user/popup.dart';
 import 'package:izone_user/view/orders_screen.dart';
 import 'package:izone_user/view/splash_screen/spalsh_screen.dart';
 import 'package:izone_user/view/user_details/user_details.dart';
@@ -26,7 +27,37 @@ class _profileScreenState extends State<profileScreen> {
           UserProfile(),
           profileList("Your orders", ordersScreen(), true),
           profileList("Account", userDetails(), true),
-          profileList("Privacy & policy", ordersScreen(), false),
+          InkWell(
+            child: Container(
+              margin: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.only(left: 20),
+              width: sWidth! / 1.05,
+              height: sHeight! / 14,
+              decoration: BoxDecoration(
+                color: Kgrey,
+                borderRadius: BorderRadius.circular(7),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    "Privacy Policy",
+                    style: GoogleFonts.sora(
+                        textStyle: TextStyle(
+                      fontSize: sWidth! / 18,
+                      fontWeight: FontWeight.w600,
+                    )),
+                  ),
+                ],
+              ),
+            ),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (builder) {
+                    return settingmenupopup(mdFilename: 'privacy_policy.md');
+                  });
+            },
+          ),
           profileList("Terms & Conditions", ordersScreen(), false),
           InkWell(
             onTap: () async {
@@ -79,15 +110,27 @@ class _profileScreenState extends State<profileScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              alignment: Alignment.center,
+              // alignment: Alignment.,
               height: 150,
               width: 200,
-              child: Text(
-                  "Hello, ${FirebaseAuth.instance.currentUser!.displayName ?? "User"} !",
-                  style: GoogleFonts.sora(
-                    textStyle: TextStyle(
-                        fontSize: sWidth! / 11, fontWeight: FontWeight.bold),
-                  )),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Hello,",
+                      style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                            fontSize: sWidth! / 11,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  Text(
+                      "${FirebaseAuth.instance.currentUser!.displayName ?? "User"} !",
+                      style: GoogleFonts.sora(
+                        textStyle: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      )),
+                ],
+              ),
             ),
             Spacer(),
             Container(

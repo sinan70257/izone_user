@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/bottom%20_navbar.dart';
-import 'package:izone_user/view/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var isloggedin = true;
@@ -146,7 +145,7 @@ class _loginScreenState extends State<loginScreen> {
     await prefs.setBool('isLoggedIn', true);
 
     setState(() {
-      isloggedIn1 = true;
+      // isloggedIn1 = true;
     });
   }
 

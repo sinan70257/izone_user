@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,24 +30,26 @@ Widget productTile(String pName, String pPrice, context, product) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                  margin: EdgeInsets.only(top: 5),
-                  width: sWidth! / 2.2,
-                  height: sWidth! / 2.2,
-                  alignment: Alignment.center,
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        Image.asset("lib/assets/izone place holder.jpg"),
-                    imageUrl: product["images"][0],
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  )),
+                margin: EdgeInsets.only(top: 5),
+                width: sWidth! / 2.2,
+                height: sWidth! / 2.2,
+                alignment: Alignment.center,
+                child: slider(image: product),
+                // child: CachedNetworkImage(
+                //   placeholder: (context, url) =>
+                //       Image.asset("lib/assets/izone place holder.jpg"),
+                //   imageUrl: product["images"][0],
+                //   imageBuilder: (context, imageProvider) => Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(10.0),
+                //       image: DecorationImage(
+                //         image: imageProvider,
+                //         fit: BoxFit.cover,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
@@ -141,43 +144,79 @@ class _favbuttonState extends State<favbutton> {
           getwish();
           setState(() {
             if (fav == false) {
-              wlist.add(widget.product["id"]);
-
-              wishList my = wishList(wish: wlist, cart: clist);
-              my.addToFirestoreWish();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.fixed,
-                  backgroundColor: black,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8))),
-                  duration: const Duration(seconds: 1),
-                  content: Text(
-                    "${widget.product["name"].toString().trimRight()} added to wishlist",
-                    style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                            color: white, fontWeight: FontWeight.w600)),
+              if (wlist.contains(widget.product["id"])) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.fixed,
+                    backgroundColor: white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    duration: const Duration(seconds: 1),
+                    content: Text(
+                      "${widget.product["name"].toString().trimRight()} already in wish list",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w500, color: black)),
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                wlist.add(widget.product["id"]);
+
+                // wishList my = wishList(
+                //   address: addressLists,
+                //   wish: wlist,
+                //   cart: clist,
+                //   count: countlist,
+                //   ptotal: ptoatal,
+                //   currentAddress: selectedAddress,
+                // );
+                // my.addToFirestoreWish();
+                final ref = FirebaseFirestore.instance
+                    .collection("user")
+                    .doc(FirebaseAuth.instance.currentUser!.email)
+                    .update({"wishlist": wlist});
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.fixed,
+                    backgroundColor: black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    duration: const Duration(seconds: 1),
+                    content: Text(
+                      "${widget.product["name"].toString().trimRight()} added to wishlist",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                              color: white, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                );
+              }
             } else {
               wlist.remove(widget.product["id"]);
-              wishList my = wishList(wish: wlist, cart: clist);
+              wishList my = wishList(
+                address: addressLists,
+                wish: wlist,
+                cart: clist,
+                count: countlist,
+                ptotal: ptoatal,
+                currentAddress: selectedAddress,
+              );
               my.addToFirestoreWish();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   behavior: SnackBarBehavior.fixed,
                   backgroundColor: white,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   duration: const Duration(seconds: 1),
                   content: Text(
                     "${widget.product["name"].toString().trimRight()} removed from wishlist",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.roboto(
                         textStyle: TextStyle(
                             fontWeight: FontWeight.w500, color: black)),
@@ -195,50 +234,56 @@ class _favbuttonState extends State<favbutton> {
   }
 }
 
-class wishList {
-  List<dynamic> wish;
-  List<dynamic> cart;
-  wishList({required this.wish, required this.cart});
-  Future<void> addToFirestoreWish() async {
-    final ref = FirebaseFirestore.instance.collection('user');
-    final docRef = ref.doc(FirebaseAuth.instance.currentUser!.email);
-    // String id = docRef.id;
-    Map<String, dynamic> toMap() {
-      return {
-        'wishlist': wish,
-        "cartlist": cart,
-      };
-    }
+class slider extends StatefulWidget {
+  const slider({super.key, this.image});
+  final image;
 
-    await docRef.set(toMap());
+  @override
+  State<slider> createState() => _sliderState();
+}
+
+class _sliderState extends State<slider> {
+  int activeIndez = 0;
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider.builder(
+      itemBuilder: (context, index, realIndex) {
+        final imgLists = widget.image["images"][index];
+        return buildimage(imgLists, index);
+      },
+      itemCount: widget.image["images"].length,
+      options: CarouselOptions(
+        scrollPhysics: ClampingScrollPhysics(),
+        onPageChanged: (index, reason) => setState(() => activeIndez = index),
+        // enlargeCenterPage: true,
+        // padEnds: true,
+        pageSnapping: true,
+        viewportFraction: 0.95,
+        autoPlay: false,
+        height: sHeight! / 2,
+      ),
+    );
   }
 }
 
-Future getwish() async {
-  final ref = await FirebaseFirestore.instance
-      .collection("user")
-      .doc(FirebaseAuth.instance.currentUser!.email)
-      .get();
-  if (ref.exists) {
-    final data = ref.data()!["wishlist"];
-    wlist = data ?? ["empty "];
-    if (wlist.length > 1 && wlist[0] == "empty") {
-      wlist.removeAt(0);
-    }
-  } else {
-    wlist = ["empty"];
-  }
-  if (ref.exists) {
-    final data = ref.data()!["cartlist"];
-    clist = data ?? ["empty "];
-    if (clist.length > 1 && clist[0] == "empty") {
-      clist.removeAt(0);
-    }
-  } else {
-    clist = ["empty"];
-  }
-
-  log("cartlist :" + clist.toString());
-
-  log("wishlist :" + wlist.toString());
-}
+Widget buildimage(String url, int index) => Container(
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: CachedNetworkImage(
+        placeholder: (context, url) =>
+            Image.asset("lib/assets/izone place holder.jpg"),
+        imageUrl: url,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );

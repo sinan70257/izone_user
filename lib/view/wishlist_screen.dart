@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/controller/get_data.dart';
 import 'package:izone_user/view/product_details_screen.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
-import 'package:izone_user/view/widgets/product_tile.dart';
-import 'package:loading_indicator/loading_indicator.dart';
+
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
 class wishListScreen extends StatefulWidget {
   const wishListScreen({super.key});
@@ -22,60 +21,36 @@ class _wishListScreenState extends State<wishListScreen> {
     sHeight = MediaQuery.of(context).size.height;
     sWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: white,
       appBar: customAppbar(context, false, "Wish List", true),
       body: ListView(physics: const BouncingScrollPhysics(), children: [
-        StreamBuilder(
-            stream: getProducts(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: LoadingIndicator(
-                    indicatorType: Indicator.circleStrokeSpin,
-                    colors: [Kblue],
-                    strokeWidth: 1,
-                  ),
-                ));
-              }
-              if (snapshot.connectionState == ConnectionState.done ||
-                  snapshot.connectionState == ConnectionState.active) {
-                if (wlist.isEmpty || wlist[0] == "empty") {
-                  return SizedBox(
-                    height: sHeight! / 1.5,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset("lib/assets/oops.jpg"),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                if (snapshot.hasData) {
-                  var data = snapshot.data;
-                  return snapshot.data!.isEmpty
-                      ? const Center(child: Text('List empty'))
-                      : ListView.builder(
-                          itemCount: wlist.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            final product1 = data
-                                .where((item) => wlist.contains(item["id"]))
-                                .toList();
-                            final product = product1[index];
+        if (wlist.isEmpty || wlist[0] == "empty")
+          SizedBox(
+            height: sHeight! / 1.5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Image.asset("lib/assets/oops.jpg"),
+                ),
+              ],
+            ),
+          ),
+        ListView.builder(
+            itemCount:
+                wlist.contains("empty") ? wlist.length - 1 : wlist.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final product1 = allProducts
+                  .where((item) => wlist.contains(item["id"]))
+                  .toList();
+              final product = product1[index];
 
-                            return wishListTile(product, index);
-                            // WishListCard(product: product);
-                          });
-                }
-              }
-              return Center(child: Text('Cant fetch items'));
+              return wishListTile(product, index);
+              // WishListCard(product: product);
             })
       ]),
     );
@@ -162,16 +137,25 @@ class _wishListScreenState extends State<wishListScreen> {
           setState(() {
             // getwish();
             wlist.remove(product["id"]);
-            wishList my = wishList(wish: wlist, cart: clist);
+            wishList my = wishList(
+              address: addressLists,
+              wish: wlist,
+              cart: clist,
+              count: countlist,
+              ptotal: ptoatal,
+              currentAddress: selectedAddress,
+            );
             my.addToFirestoreWish();
             getwish();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: white,
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10))),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                ),
                 duration: const Duration(seconds: 1),
                 content: Text(
                   "${product["name"].toString().trimRight()} removed from wishlist",

@@ -29,7 +29,7 @@ class _userDetailsState extends State<userDetails> {
                       .instance.currentUser!.photoURL ??
                   "https://i0.wp.com/www.cocoanetics.com/files/t_hero.png?fit=706%2C644&ssl=1"),
             ),
-            customField2(
+            customField1(
                 label: "User name",
                 height: 50,
                 width: sWidth! / 1.03,
@@ -37,7 +37,7 @@ class _userDetailsState extends State<userDetails> {
                 max: false,
                 read: false,
                 content: FirebaseAuth.instance.currentUser!.displayName!),
-            customField2(
+            customField1(
                 label: "Password",
                 height: 50,
                 width: sWidth! / 1.03,

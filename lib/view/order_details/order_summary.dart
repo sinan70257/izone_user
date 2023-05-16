@@ -22,7 +22,7 @@ class _DeliveryStatusPageState extends State<DeliveryStatusPage> {
           children: [
             const StatusPage(),
             Center(
-              child: customField2(
+              child: customField1(
                   label: "Address",
                   height: 100,
                   width: sWidth! / 1.03,
@@ -43,7 +43,7 @@ class _DeliveryStatusPageState extends State<DeliveryStatusPage> {
             ),
             space10(),
             Center(
-              child: customField2(
+              child: customField1(
                 label: "Payment method",
                 height: 50,
                 width: sWidth! / 1.03,

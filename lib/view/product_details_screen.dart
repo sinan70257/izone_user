@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/bottom%20_navbar.dart';
+import 'package:izone_user/view/cart_screen/cart_screen.dart';
 import 'package:izone_user/view/widgets/custom_text_field.dart';
 import 'package:izone_user/view/widgets/product_tile.dart';
+import 'package:izone_user/view/wishlist_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class productDetails extends StatefulWidget {
@@ -32,6 +34,7 @@ class _productDetailsState extends State<productDetails> {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            scaffoldKey.currentState;
           },
           icon: Icon(
             Icons.arrow_back_ios_new,
@@ -80,7 +83,7 @@ class _productDetailsState extends State<productDetails> {
                     ],
                   ),
                   space20(),
-                  customField2(
+                  customField1(
                     read: true,
                     label: "Color",
                     // height: 200,
@@ -95,7 +98,7 @@ class _productDetailsState extends State<productDetails> {
                   //     width: sWidth! / 1.1,
                   //     GB: true),
                   space20(),
-                  customField2(
+                  customField1(
                     read: true,
                     label: "Variant",
                     // height: 200,
@@ -110,7 +113,7 @@ class _productDetailsState extends State<productDetails> {
                   //     width: sWidth! / 1.1,
                   //     GB: false),
                   space20(),
-                  customField2(
+                  customField1(
                     read: true,
                     label: "About product",
                     // height: 200,
@@ -258,8 +261,14 @@ class _productDetailsState extends State<productDetails> {
                     if (clist.contains(widget.product["id"])) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          backgroundColor: Kblue,
-                          content: Text("Product is already in the cart"),
+                          duration: Duration(microseconds: 800),
+                          backgroundColor: white,
+                          content: Text(
+                            "Product is already in the cart",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.roboto(
+                                textStyle: TextStyle(color: black)),
+                          ),
                         ),
                       );
                       Navigator.pushReplacement(
@@ -272,7 +281,16 @@ class _productDetailsState extends State<productDetails> {
                       );
                     } else {
                       clist.add(widget.product["id"]);
-                      wishList my = wishList(cart: clist, wish: wlist);
+                      countlist.add(1);
+                      ptoatal.add(int.parse(widget.product["price"]) * 1);
+                      wishList my = wishList(
+                        address: addressLists,
+                        cart: clist,
+                        wish: wlist,
+                        count: countlist,
+                        ptotal: ptoatal,
+                        currentAddress: selectedAddress,
+                      );
                       my.addToFirestoreWish();
                       Navigator.pushReplacement(
                         context,
@@ -285,7 +303,9 @@ class _productDetailsState extends State<productDetails> {
                     }
                   },
                   child: Text(
-                    "Add to cart",
+                    clist.contains(widget.product["id"])
+                        ? "Go to cart"
+                        : "Add to cart",
                     style: GoogleFonts.sora(
                       textStyle: TextStyle(
                           color: Colors.white,

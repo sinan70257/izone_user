@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/login_screen.dart';
+import 'package:izone_user/view/search_screen/search_screen.dart';
 
 AppBar customAppbar(BuildContext context, bool home, String title, bool black) {
   return AppBar(
@@ -18,10 +19,19 @@ AppBar customAppbar(BuildContext context, bool home, String title, bool black) {
                       (route) => false);
                   // logout();
                 },
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                  size: sWidth! / 12,
+                icon: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => searchScreen(),
+                        ));
+                  },
+                  child: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: sWidth! / 12,
+                  ),
                 ),
               )
             : SizedBox(),
@@ -75,7 +85,7 @@ AppBar customAppbar2(BuildContext context, String label) {
           size: 30,
         ),
         onPressed: () {
-          Navigator.of(context).pop();
+          Navigator.pop(context, "refresh");
         },
       ),
     ),

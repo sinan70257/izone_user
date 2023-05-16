@@ -68,7 +68,8 @@ class LoginBtn extends StatelessWidget {
           content: Text(
             'Logged In  successfully',
             style: GoogleFonts.roboto(
-              textStyle: const TextStyle(fontSize: 20),
+              textStyle:
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
           ),
           duration: const Duration(seconds: 2),

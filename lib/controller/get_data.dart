@@ -1,6 +1,13 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+TextEditingController name1Controller = TextEditingController();
+TextEditingController phoneController = TextEditingController();
+TextEditingController pincodeController = TextEditingController();
+TextEditingController cityController = TextEditingController();
+TextEditingController stateController = TextEditingController();
+TextEditingController houseController = TextEditingController();
+TextEditingController colonyController = TextEditingController();
 
 Stream<List<DocumentSnapshot>> getProducts() async* {
   try {

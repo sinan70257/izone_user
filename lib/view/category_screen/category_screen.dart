@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/category_screen/methods/product_grid.dart';
@@ -11,8 +13,42 @@ class categoryScreen extends StatefulWidget {
 }
 
 class _categoryScreenState extends State<categoryScreen> {
+  int selectedIndex = -1;
+  void catfilter(int i) {
+    setState(() {
+      switch (i) {
+        case 0:
+          allcat = iphone;
+          break;
+        case 1:
+          allcat = ipad;
+          break;
+        case 2:
+          allcat = watch;
+          break;
+        case 3:
+          allcat = macbook;
+          break;
+
+        default:
+          allcat = allProducts;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    catfilter(-1);
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // log(iphone.toString());
+    // log(ipad.toString());
+    // log(macbook.toString());
+    // log(watch.toString());
     sHeight = MediaQuery.of(context).size.height;
     sWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -34,12 +70,12 @@ class _categoryScreenState extends State<categoryScreen> {
                     Wrap(
                       spacing: 5,
                       direction: Axis.horizontal,
-                      children: filterChipsList(),
+                      children: filterChipsList(catfilter),
                     ),
                   ],
                 ),
               ),
-              ProductGrid(),
+              productGrid(),
             ],
           ),
         ),
@@ -47,82 +83,7 @@ class _categoryScreenState extends State<categoryScreen> {
     );
   }
 
-  // Widget productTile(
-  //   String pName,
-  //   String pPrice,
-  // ) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       InkWell(
-  //         onTap: () {
-  //           Navigator.of(context).push(MaterialPageRoute(
-  //             builder: (context) => productDetails(),
-  //           ));
-  //         },
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             Container(
-  //               width: sWidth! / 2.1,
-  //               height: sWidth! / 2.1,
-  //               alignment: Alignment.center,
-  //               decoration: BoxDecoration(
-  //                 image: DecorationImage(
-  //                     image: NetworkImage(
-  //                         "https://assets.shpresa.al/shop/2022/09/daac540d-cel1351-p.jpg"),
-  //                     fit: BoxFit.cover),
-  //                 color: Kgrey,
-  //                 borderRadius: BorderRadius.circular(15),
-  //               ),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.only(left: 15.0),
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Text(
-  //                     "  $pName",
-  //                     style: GoogleFonts.poppins(
-  //                       textStyle: TextStyle(
-  //                           fontSize: 18, fontWeight: FontWeight.w500),
-  //                     ),
-  //                   ),
-  //                   Text(
-  //                     "  ₹ $pPrice",
-  //                     style: GoogleFonts.inter(
-  //                       textStyle: TextStyle(
-  //                           fontSize: 15, fontWeight: FontWeight.w500),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //       Container(
-  //         margin: EdgeInsets.only(top: 5, left: 20),
-  //         height: sHeight! / 30,
-  //         width: sWidth! / 6,
-  //         child: ElevatedButton(
-  //           onPressed: () {},
-  //           child: Text(
-  //             "Buy",
-  //             style: TextStyle(fontSize: 14),
-  //           ),
-  //           style: ElevatedButton.styleFrom(
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(30),
-  //             ),
-  //           ),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
-
-  List<Widget> filterChipsList() {
+  List<Widget> filterChipsList(catfilter) {
     List<Widget> chips = [];
     for (int i = 0; i < _chipsList.length; i++) {
       Widget item = Padding(
@@ -144,8 +105,17 @@ class _categoryScreenState extends State<categoryScreen> {
           backgroundColor: _chipsList[i].color,
           selected: _chipsList[i].isSelected,
           onSelected: (bool value) {
+            if (value) {
+              selectedIndex = i;
+              _chipsList.forEach((element) => {element.isSelected = false});
+              _chipsList[selectedIndex].isSelected = true;
+            } else {
+              selectedIndex = -1;
+              _chipsList[i].isSelected = false;
+            }
             setState(() {
-              _chipsList[i].isSelected = value;
+              // _chipsList[selectedIndex].isSelected = value;
+              catfilter(selectedIndex);
             });
           },
         ),

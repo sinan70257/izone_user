@@ -73,6 +73,7 @@ class SignUpBtn extends StatelessWidget {
         SnackBar(
           content: Text(
             'Sign-up successful',
+            textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
               textStyle: const TextStyle(fontSize: 20),
             ),
@@ -106,6 +107,7 @@ class SignUpBtn extends StatelessWidget {
         SnackBar(
           content: Text(
             errorMessage,
+            textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
               textStyle: const TextStyle(fontSize: 20),
             ),

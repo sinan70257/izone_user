@@ -13,6 +13,16 @@ class customBottomBar extends StatefulWidget {
 class _customBottomBarState extends State<customBottomBar> {
   @override
   Widget build(BuildContext context) {
+    getwish();
+    if (ptoatal.isEmpty || ptoatal[0] == "empty") {
+      total = 0;
+    } else {
+      int t = 0;
+      for (var i = 0; i < ptoatal.length; i++) {
+        t = t + int.parse(ptoatal[i].toString());
+      }
+      total = t;
+    }
     return Container(
       decoration: BoxDecoration(
           color: Kblue,
@@ -27,9 +37,9 @@ class _customBottomBarState extends State<customBottomBar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "    Total :  ₹ 2,99,000",
+                "    Total :  ₹ $total",
                 style: GoogleFonts.sora(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                         color: Colors.white,
                         fontSize: 17,
                         fontWeight: FontWeight.bold)),
@@ -37,6 +47,7 @@ class _customBottomBarState extends State<customBottomBar> {
               Container(
                 height: sHeight! / 28,
                 width: sWidth! / 2.5,
+                margin: EdgeInsets.only(right: sWidth! / 22),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -44,17 +55,27 @@ class _customBottomBarState extends State<customBottomBar> {
                       backgroundColor: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => orderDetails(),
-                          ));
+                      if (clist.isEmpty || clist[0] == "empty") {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 1),
+                                content: Text(
+                                  "Add any product to continue! ",
+                                  textAlign: TextAlign.center,
+                                )));
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => orderDetails(),
+                            ));
+                      }
                     },
-                    child: Text(
+                    child: const Text(
                       "Place order",
                       style: TextStyle(color: Colors.black),
                     )),
-                margin: EdgeInsets.only(right: sWidth! / 22),
               ),
             ],
           ),
