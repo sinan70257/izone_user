@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/login_screen.dart';
 import 'package:izone_user/view/search_screen/search_screen.dart';
 
 AppBar customAppbar(BuildContext context, bool home, String title, bool black) {
@@ -14,24 +13,16 @@ AppBar customAppbar(BuildContext context, bool home, String title, bool black) {
         child: home
             ? IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => loginScreen()),
-                      (route) => false);
-                  // logout();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => searchScreen(),
+                      ));
                 },
-                icon: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => searchScreen(),
-                        ));
-                  },
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                    size: sWidth! / 12,
-                  ),
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                  size: sWidth! / 12,
                 ),
               )
             : SizedBox(),
@@ -74,7 +65,7 @@ AppBar customAppbar(BuildContext context, bool home, String title, bool black) {
   );
 }
 
-AppBar customAppbar2(BuildContext context, String label) {
+AppBar customAppbar2(BuildContext context, String label, {bool buyn = false}) {
   return AppBar(
     centerTitle: true,
     leading: Padding(
@@ -85,6 +76,11 @@ AppBar customAppbar2(BuildContext context, String label) {
           size: 30,
         ),
         onPressed: () {
+          if (buyn) {
+            buynow.clear();
+            buynowoCount = 1;
+            buynowtotal = 0;
+          }
           Navigator.pop(context, "refresh");
         },
       ),

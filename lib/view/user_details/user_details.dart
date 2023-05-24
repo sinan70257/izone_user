@@ -27,7 +27,7 @@ class _userDetailsState extends State<userDetails> {
               radius: 100,
               backgroundImage: NetworkImage(FirebaseAuth
                       .instance.currentUser!.photoURL ??
-                  "https://i0.wp.com/www.cocoanetics.com/files/t_hero.png?fit=706%2C644&ssl=1"),
+                  "https://www.academicsforcompanies.be/static_cdn/main/contact/team_members/default_thumbnail.png"),
             ),
             customField1(
                 label: "User name",
@@ -35,21 +35,20 @@ class _userDetailsState extends State<userDetails> {
                 width: sWidth! / 1.03,
                 num: false,
                 max: false,
-                read: false,
+                read: true,
                 content: FirebaseAuth.instance.currentUser!.displayName!),
             customField1(
-                label: "Password",
+                label: "email",
                 height: 50,
                 width: sWidth! / 1.03,
                 num: false,
                 max: false,
-                read: false,
-                content: FirebaseAuth.instance.currentUser!.phoneNumber ??
-                    "5454212215"),
+                read: true,
+                content: FirebaseAuth.instance.currentUser!.email!),
           ],
         ),
       ),
-      bottomSheet: floatingButton(context),
+      // bottomSheet: floatingButton(context),
     );
   }
 }

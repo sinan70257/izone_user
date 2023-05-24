@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/controller/get_data.dart';
 import 'package:izone_user/view/bottom%20_navbar.dart';
-import 'package:izone_user/view/cart_screen/cart_screen.dart';
 import 'package:izone_user/view/login_screen/login_screen.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -82,10 +80,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   watch = data
                       .where((element) => "Apple watch" == element["category"])
                       .toList();
+
                   macbook = data
                       .where((element) => "Macbook" == element["category"])
                       .toList();
-                  getwish();
+
                   allcat = allProducts = data;
                 }
               }
@@ -103,8 +102,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkLogin() async {
-    await Future.delayed(
-      const Duration(seconds: 5),
+    // if (FirebaseAuth.instance.currentUser != null) {
+    //   await getwish();
+    // }
+    await Future.wait(
+      [getProducts().first, getImages().first],
     );
     Navigator.pushReplacement(
       context,
@@ -144,6 +146,7 @@ class CheckUserLogin extends StatelessWidget {
             // return BottomNavbar(
             //   cart: false,
             // );
+            // getwish();
             return BottomNavbar(
               cart: false,
             );

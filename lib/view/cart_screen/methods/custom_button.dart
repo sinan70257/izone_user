@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/order_summary.dart';
+import 'package:izone_user/view/orders_screen/order_summary.dart';
 
-class customBottomBar extends StatefulWidget {
+class customBottomBar extends StatelessWidget {
   const customBottomBar({super.key});
 
-  @override
-  State<customBottomBar> createState() => _customBottomBarState();
-}
-
-class _customBottomBarState extends State<customBottomBar> {
   @override
   Widget build(BuildContext context) {
     getwish();

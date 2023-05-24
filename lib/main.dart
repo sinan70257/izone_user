@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:izone_user/constants/provider.dart';
 import 'package:izone_user/view/bottom%20_navbar.dart';
+import 'package:izone_user/view/profile_screen/profile_screen.dart';
 // import 'package:izone_user/view/splash_screen.dart';
 import 'package:izone_user/view/splash_screen/spalsh_screen.dart';
 import 'package:provider/provider.dart';

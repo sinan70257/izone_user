@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/order_summary.dart';
-import 'package:izone_user/view/product_details_screen.dart';
+import 'package:izone_user/view/orders_screen/order_summary.dart';
+import 'package:izone_user/view/product_details/product_details_screen.dart';
 import 'package:izone_user/view/widgets/product_tile.dart';
 
 Widget productTile2(String pName, String pPrice, context, product) {
@@ -100,11 +100,34 @@ Widget productTile2(String pName, String pPrice, context, product) {
                 width: 140,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => orderDetails(),
-                        ));
+                    if (int.parse(product["quantity"]) > 0) {
+                      buynow.insert(0, product["id"]);
+                      if (buynow.length > 1) {
+                        buynow.removeLast();
+                      }
+                      buynowtotal = int.parse(product["price"]);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => orderDetails(buynow: true),
+                          ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          duration: const Duration(seconds: 1),
+                          backgroundColor: Colors.red,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(14),
+                                  topRight: Radius.circular(14))),
+                          content: const SizedBox(
+                            height: 51,
+                            child: Center(
+                              child: Text("Out of stock ! ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center),
+                            ),
+                          )));
+                    }
                   },
                   child: Text(
                     "Buy",

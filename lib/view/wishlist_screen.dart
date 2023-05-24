@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/product_details_screen.dart';
+import 'package:izone_user/view/product_details/product_details_screen.dart';
 import 'package:izone_user/view/widgets/custom_app_bar.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,7 +46,9 @@ class _wishListScreenState extends State<wishListScreen> {
             itemBuilder: (context, index) {
               final product1 = allProducts
                   .where((item) => wlist.contains(item["id"]))
-                  .toList();
+                  .toList()
+                ..sort((a, b) =>
+                    wlist.indexOf(a['id']).compareTo(wlist.indexOf(b['id'])));
               final product = product1[index];
 
               return wishListTile(product, index);
@@ -168,8 +170,8 @@ class _wishListScreenState extends State<wishListScreen> {
           });
         },
         icon: Icon(
-          Icons.favorite,
-          color: Colors.red,
+          Icons.remove_circle_outline,
+          color: Kgrey2,
         ));
   }
 }

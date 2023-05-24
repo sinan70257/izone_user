@@ -176,9 +176,6 @@ class _selectAddressState extends State<selectAddress> {
         ptotal: ptoatal,
         address: addressLists,
         currentAddress: selectedAddress,
-        // buyNow: buyNowItem,
-        // buyNowCount: buyNowCount,
-        // buyNowTotal: buyNowTotals,
       );
       my.addToFirestoreWish();
     });

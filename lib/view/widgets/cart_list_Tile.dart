@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/address/address_screen/address_screen.dart';
-import 'package:izone_user/view/product_details_screen.dart';
+import 'package:izone_user/view/product_details/product_details_screen.dart';
 
 class cartListTile extends StatelessWidget {
   const cartListTile(
@@ -13,22 +13,27 @@ class cartListTile extends StatelessWidget {
       this.onRemove,
       this.index,
       this.updateTotal,
-      this.ordered = false});
+      this.ordered = false,
+      this.buyn = false});
   final product;
+
   final onRemove;
   final index;
   final updateTotal;
   final bool ordered;
+  final buyn;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => productDetails(product: product),
-            ));
+        if (buyn == false) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => productDetails(product: product),
+              ));
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
@@ -101,9 +106,10 @@ class cartListTile extends StatelessWidget {
                 space20(),
                 InkWell(
                     onTap: () {
-                      onRemove(product["id"]);
-                      countlist.removeAt(index);
-                      ptoatal.removeAt(index);
+                      buyn ? buynowoCount = 1 : onRemove(product["id"]);
+                      buyn ? buynow.clear() : countlist.removeAt(index);
+                      buyn ? buynowtotal = 0 : ptoatal.removeAt(index);
+
                       wishList my = wishList(
                         address: addressLists,
                         wish: wlist,
@@ -134,6 +140,7 @@ class cartListTile extends StatelessWidget {
                         index: index,
                         onRemove: onRemove,
                         product: product,
+                        buyn: buyn,
                         qty: int.parse(product["quantity"]),
                       ),
                 space20(),
@@ -155,6 +162,7 @@ class productCounter extends StatefulWidget {
     required this.qty,
     required this.onRemove,
     this.index,
+    this.buyn,
     this.updateTotal,
   });
   final int qty;
@@ -162,6 +170,7 @@ class productCounter extends StatefulWidget {
   final product;
   final index;
   final updateTotal;
+  final buyn;
 
   @override
   State<productCounter> createState() => _productCounterState();
@@ -170,7 +179,7 @@ class productCounter extends StatefulWidget {
 class _productCounterState extends State<productCounter> {
   @override
   Widget build(BuildContext context) {
-    int count = countlist[widget.index];
+    int count = widget.buyn ? buynowoCount : countlist[widget.index];
     return Container(
       height: sHeight! / 31,
       width: 80,
@@ -183,11 +192,17 @@ class _productCounterState extends State<productCounter> {
           InkWell(
             onTap: () {
               setState(() {
-                if (count == 1) {
+                if (widget.buyn ? buynowoCount == 1 : count == 1) {
                   // clist.remove(widget.productid);
-                  widget.onRemove(widget.product["id"]);
-                  countlist.removeAt(widget.index);
-                  ptoatal.removeAt(widget.index);
+                  widget.buyn
+                      ? buynow.clear()
+                      : widget.onRemove(widget.product["id"]);
+                  widget.buyn
+                      ? buynowoCount = 1
+                      : countlist.removeAt(widget.index);
+                  widget.buyn
+                      ? buynowtotal = 0
+                      : ptoatal.removeAt(widget.index);
 
                   wishList my = wishList(
                     wish: wlist,
@@ -211,10 +226,13 @@ class _productCounterState extends State<productCounter> {
                   );
                   widget.updateTotal();
                 } else {
-                  count--;
-                  countlist[widget.index] = count;
-                  ptoatal[widget.index] =
-                      count * int.parse(widget.product["price"]);
+                  widget.buyn ? buynowoCount-- : count--;
+                  widget.buyn ? buynowoCount : countlist[widget.index] = count;
+                  widget.buyn
+                      ? buynowtotal =
+                          buynowoCount * int.parse(widget.product["price"])
+                      : ptoatal[widget.index] =
+                          count * int.parse(widget.product["price"]);
 
                   wishList my = wishList(
                     address: addressLists,
@@ -243,7 +261,7 @@ class _productCounterState extends State<productCounter> {
             ),
             child: Center(
               child: Text(
-                "$count",
+                widget.buyn ? "$buynowoCount" : "$count",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -263,10 +281,13 @@ class _productCounterState extends State<productCounter> {
                     ),
                   );
                 } else {
-                  count++;
-                  countlist[widget.index] = count;
-                  ptoatal[widget.index] =
-                      count * int.parse(widget.product["price"]);
+                  widget.buyn ? buynowoCount++ : count++;
+                  widget.buyn ? buynowoCount : countlist[widget.index] = count;
+                  widget.buyn
+                      ? buynowtotal =
+                          buynowoCount * int.parse(widget.product["price"])
+                      : ptoatal[widget.index] =
+                          count * int.parse(widget.product["price"]);
 
                   wishList my = wishList(
                     address: addressLists,

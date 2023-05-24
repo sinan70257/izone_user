@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
 
 class orderedProducts extends StatelessWidget {
-  const orderedProducts({
-    super.key,
-  });
+  const orderedProducts({super.key, this.product, this.data});
+  final product;
+  final data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,8 @@ class orderedProducts extends StatelessWidget {
           Center(
             child: Container(
               decoration: BoxDecoration(
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://cdn.shopify.com/s/files/1/0568/5942/7015/products/MKJP3HN_A_1.png?v=1633758334"),
+                  image: DecorationImage(
+                      image: NetworkImage(product["images"][0]),
                       fit: BoxFit.cover),
                   color: Kgrey,
                   borderRadius: BorderRadius.circular(10)),
@@ -35,36 +34,40 @@ class orderedProducts extends StatelessWidget {
             ),
           ),
           space20(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              space20(),
-              space20(),
-              Text(
-                "Watch Series 7",
-                style: GoogleFonts.inter(
-                    textStyle:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-              ),
-              Text(
-                "32 GB",
-                style: GoogleFonts.inter(
-                    textStyle:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
-              ),
-              space10(),
-              Row(
-                children: [
-                  Text(
-                    "₹ 49,990",
-                    style: GoogleFonts.inter(
-                        textStyle: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500)),
-                  ),
-                  // Spacer(),
-                ],
-              )
-            ],
+          Container(
+            width: sWidth! / 2.3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                space20(),
+                space20(),
+                Text(
+                  product["name"],
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.inter(
+                      textStyle:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+                ),
+                Text(
+                  product["variant"],
+                  style: GoogleFonts.inter(
+                      textStyle:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+                ),
+                space10(),
+                Row(
+                  children: [
+                    Text(
+                      "₹ ${product["price"]}",
+                      style: GoogleFonts.inter(
+                          textStyle: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500)),
+                    ),
+                    // Spacer(),
+                  ],
+                )
+              ],
+            ),
           ),
           Spacer(),
           Column(
@@ -76,9 +79,9 @@ class orderedProducts extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
-                      "Qty : 2",
+                      "Qty : ${data["count"]}",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

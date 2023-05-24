@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:izone_user/constants/constants.dart';
 import 'package:izone_user/view/cart_screen/cart_screen.dart';
 import 'package:izone_user/view/category_screen/category_screen.dart';
-import 'package:izone_user/view/profile_screen.dart';
+import 'package:izone_user/view/profile_screen/profile_screen.dart';
 import 'package:izone_user/view/wishlist_screen.dart';
 import 'package:izone_user/view/home_screen/home_screen.dart';
 

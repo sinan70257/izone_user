@@ -35,6 +35,13 @@ Widget space20() {
   );
 }
 
+Widget space50() {
+  return SizedBox(
+    height: sHeight! / 20,
+    width: sHeight! / 20,
+  );
+}
+
 class ItemModel {
   String label;
   Color color;
@@ -60,6 +67,13 @@ List allProducts = [];
 List searchlist = [];
 List addressLists = [];
 dynamic selectedAddress;
+String buynowItem = "";
+int buynowtotal = 1;
+int buynowoCount = 1;
+List buynow = [];
+List orderedItems = [];
+List orderedCount = [];
+dynamic orderedAddress;
 
 class wishList {
   List<dynamic> wish;
@@ -110,6 +124,7 @@ Future getwish() async {
   } else {
     wlist = ["empty"];
   }
+  log("wishlist updated");
   if (ref.exists) {
     final data = ref.data()!["cartlist"];
     clist = data ?? ["empty"];
@@ -119,6 +134,7 @@ Future getwish() async {
   } else {
     clist = ["empty"];
   }
+  log("cartlist updated");
   if (ref.exists) {
     final data = ref.data()!["countlist"];
     countlist = data ?? ["empty"];

@@ -7,8 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:izone_user/constants/constants.dart';
-import 'package:izone_user/view/order_summary.dart';
-import 'package:izone_user/view/product_details_screen.dart';
+import 'package:izone_user/view/orders_screen/order_summary.dart';
+import 'package:izone_user/view/product_details/product_details_screen.dart';
 
 Widget productTile(String pName, String pPrice, context, product) {
   return Container(
@@ -63,12 +63,31 @@ Widget productTile(String pName, String pPrice, context, product) {
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                     ),
-                    Text(
-                      "₹ $pPrice",
-                      style: GoogleFonts.inter(
-                        textStyle: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "₹ $pPrice",
+                          style: GoogleFonts.inter(
+                            textStyle: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Spacer(),
+                        int.parse(product["quantity"]) > 0
+                            ? const Text(
+                                "In stock  ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green),
+                              )
+                            : const Text(
+                                "out of stock  ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              )
+                      ],
                     ),
                   ],
                 ),
@@ -87,11 +106,33 @@ Widget productTile(String pName, String pPrice, context, product) {
                 width: sWidth! / 4.5,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => orderDetails(),
-                        ));
+                    if (int.parse(product["quantity"]) > 0) {
+                      buynow.insert(0, product["id"]);
+                      if (buynow.length > 1) {
+                        buynow.removeLast();
+                      }
+                      buynowtotal = int.parse(product["price"]);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => orderDetails(buynow: true),
+                          ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          duration: const Duration(seconds: 1),
+                          backgroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          content: const SizedBox(
+                            height: 51,
+                            child: Center(
+                              child: Text("Out of stock ! ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center),
+                            ),
+                          )));
+                    }
                   },
                   child: Text(
                     "Buy",
@@ -165,19 +206,16 @@ class _favbuttonState extends State<favbutton> {
               } else {
                 wlist.add(widget.product["id"]);
 
-                // wishList my = wishList(
-                //   address: addressLists,
-                //   wish: wlist,
-                //   cart: clist,
-                //   count: countlist,
-                //   ptotal: ptoatal,
-                //   currentAddress: selectedAddress,
-                // );
-                // my.addToFirestoreWish();
-                final ref = FirebaseFirestore.instance
-                    .collection("user")
-                    .doc(FirebaseAuth.instance.currentUser!.email)
-                    .update({"wishlist": wlist});
+                wishList my = wishList(
+                  address: addressLists,
+                  wish: wlist,
+                  cart: clist,
+                  count: countlist,
+                  ptotal: ptoatal,
+                  currentAddress: selectedAddress,
+                );
+                my.addToFirestoreWish();
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     behavior: SnackBarBehavior.fixed,
